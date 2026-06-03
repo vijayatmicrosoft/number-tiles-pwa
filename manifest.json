@@ -1,10 +1,18 @@
 {
+  "id": "/",
   "name": "Number Tiles",
   "short_name": "NumTiles",
   "description": "A fun number matching puzzle game",
   "start_url": ".",
+  "scope": ".",
   "display": "standalone",
   "orientation": "portrait",
+  "categories": ["games", "entertainment"],
+  "prefer_related_applications": false,
+  "serviceworker": {
+    "src": "./sw.js",
+    "scope": "./"
+  },
   "theme_color": "#1a1a2e",
   "background_color": "#1a1a2e",
   "icons": [
