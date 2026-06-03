@@ -1,0 +1,98 @@
+.tile {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(14px, 4vw, 22px);
+  font-weight: 700;
+  border-radius: var(--tile-radius);
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--anim-select), box-shadow var(--anim-select);
+  position: relative;
+}
+
+.tile--n1 { background-color: var(--color-n1); color: var(--text-on-n1); }
+.tile--n2 { background-color: var(--color-n2); color: var(--text-on-n2); }
+.tile--n3 { background-color: var(--color-n3); color: var(--text-on-n3); }
+.tile--n4 { background-color: var(--color-n4); color: var(--text-on-n4); }
+.tile--n5 { background-color: var(--color-n5); color: var(--text-on-n5); }
+.tile--n6 { background-color: var(--color-n6); color: var(--text-on-n6); }
+.tile--n7 { background-color: var(--color-n7); color: var(--text-on-n7); }
+.tile--n8 { background-color: var(--color-n8); color: var(--text-on-n8); }
+.tile--n9 { background-color: var(--color-n9); color: var(--text-on-n9); }
+
+.tile--selected {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.85), 0 0 12px var(--color-accent-glow);
+  transform: scale(1.08);
+  z-index: 2;
+}
+
+.tile--matched {
+  animation: matchFlash var(--anim-match) ease-out forwards;
+}
+
+.tile--invalid {
+  animation: shake var(--anim-shake) ease-in-out;
+}
+
+.tile--cleared {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.tile--hint {
+  animation: pulse 0.6s ease-in-out infinite alternate;
+}
+
+.tile--hammer-mode {
+  cursor: crosshair;
+}
+
+.hammer-active .tile:not(.tile--cleared) {
+  cursor: crosshair;
+  animation: pulse 0.6s ease-in-out infinite alternate;
+}
+
+@keyframes matchFlash {
+  0% {
+    transform: scale(1);
+    background-color: var(--color-success);
+    opacity: 1;
+  }
+  40% {
+    transform: scale(1.25);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-4px); }
+  40% { transform: translateX(4px); }
+  60% { transform: translateX(-3px); }
+  80% { transform: translateX(3px); }
+}
+
+@keyframes pulse {
+  from {
+    box-shadow: 0 0 0 0 var(--color-warning);
+  }
+  to {
+    box-shadow: 0 0 0 4px transparent;
+    transform: scale(1.05);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

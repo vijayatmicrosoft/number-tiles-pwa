@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1a1a2e">
+  <meta name="description" content="Number Tiles - A fun number matching puzzle game">
+
+  <!-- PWA: This link tells the browser where to find the app manifest -->
+  <link rel="manifest" href="manifest.json">
+
+  <!-- iOS PWA support (Safari doesn't use manifest.json for these) -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="NumTiles">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+
+  <link rel="icon" href="assets/icons/icon-192.png">
+
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/grid.css">
+  <link rel="stylesheet" href="css/tiles.css">
+  <link rel="stylesheet" href="css/modals.css">
+
+  <title>Number Tiles</title>
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <button class="header__btn" id="menuBtn" aria-label="Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+      <h1 class="header__title">Number Tiles</h1>
+      <button class="header__btn" id="settingsBtn" aria-label="Settings">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
+        </svg>
+      </button>
+    </header>
+
+    <div class="hud">
+      <div class="hud__item">
+        <span class="hud__label">Score</span>
+        <span class="hud__value" id="scoreValue" aria-live="polite">0</span>
+      </div>
+      <div class="hud__item hud__item--level">
+        <span class="hud__label">Level</span>
+        <span class="hud__value" id="levelValue" aria-live="polite">1</span>
+      </div>
+      <div class="hud__item">
+        <span class="hud__label">Coins</span>
+        <span class="hud__value" id="coinsValue" aria-live="polite">0</span>
+      </div>
+    </div>
+
+    <main class="board-area">
+      <div class="board" id="board">
+        <!-- Tiles rendered here by renderer.js -->
+      </div>
+    </main>
+
+    <div class="boosters">
+      <button class="booster-btn" id="hammerBtn" aria-label="Hammer - remove one tile">
+        <span class="booster-btn__icon">🔨</span>
+        <span class="booster-btn__cost">10</span>
+      </button>
+      <button class="booster-btn booster-btn--primary" id="addRowsBtn" aria-label="Add rows">
+        <span class="booster-btn__icon">➕</span>
+        <span class="booster-btn__label">Add Rows</span>
+        <span class="booster-btn__count" id="addRowsCount">3</span>
+      </button>
+      <button class="booster-btn" id="hintBtn" aria-label="Hint - show a valid pair">
+        <span class="booster-btn__icon">💡</span>
+        <span class="booster-btn__cost">5</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Modals -->
+  <dialog class="modal" id="levelCompleteModal">
+    <div class="modal__card">
+      <h2 class="modal__title">Level Complete!</h2>
+      <div class="modal__stars" id="starsContainer"></div>
+      <div class="modal__stats" id="levelStats"></div>
+      <button class="modal__btn modal__btn--primary" id="nextLevelBtn">Next Level</button>
+    </div>
+  </dialog>
+
+  <dialog class="modal" id="noMovesModal">
+    <div class="modal__card">
+      <h2 class="modal__title">No Moves!</h2>
+      <p class="modal__text" id="noMovesText"></p>
+      <div class="modal__actions">
+        <button class="modal__btn modal__btn--primary" id="addRowsModalBtn">Add Rows</button>
+        <button class="modal__btn" id="restartLevelBtn">Restart Level</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="modal" id="settingsModal">
+    <div class="modal__card">
+      <h2 class="modal__title">Settings</h2>
+      <div class="modal__setting">
+        <span>Sound</span>
+        <label class="toggle">
+          <input type="checkbox" id="soundToggle" checked>
+          <span class="toggle__slider"></span>
+        </label>
+      </div>
+      <div class="modal__setting">
+        <span>Vibration</span>
+        <label class="toggle">
+          <input type="checkbox" id="vibrationToggle" checked>
+          <span class="toggle__slider"></span>
+        </label>
+      </div>
+      <button class="modal__btn modal__btn--danger" id="resetProgressBtn">Reset Progress</button>
+      <button class="modal__btn" id="closeSettingsBtn">Close</button>
+    </div>
+  </dialog>
+
+  <dialog class="modal" id="installModal">
+    <div class="modal__card">
+      <h2 class="modal__title">Install App</h2>
+      <p class="modal__text">Add Number Tiles to your home screen for the best experience!</p>
+      <div class="modal__actions">
+        <button class="modal__btn modal__btn--primary" id="installBtn">Install</button>
+        <button class="modal__btn" id="dismissInstallBtn">Not Now</button>
+      </div>
+    </div>
+  </dialog>
+
+  <noscript>
+    <p style="text-align:center;padding:2rem;color:#fff;">
+      Number Tiles requires JavaScript to play. Please enable it in your browser settings.
+    </p>
+  </noscript>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
