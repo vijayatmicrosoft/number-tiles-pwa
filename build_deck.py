@@ -138,6 +138,20 @@ SLIDES = [
         ],
     },
     {
+        "title": "Windows package formats the Store accepts",
+        "bullets": [
+            "MSIX family is the modern format (2018+); APPX family is the older Windows 8/10 UWP era format - same idea, newer container",
+            ".msix - a single app package for one architecture (modern)",
+            ".msixbundle - a bundle of several .msix packages (multiple architectures and scales); PWABuilder's main output and what you upload",
+            ".msixupload - a Store submission wrapper around a .msixbundle plus debug symbols; produced by Visual Studio, not needed here",
+            ".appx - the original single-app package for one architecture (older)",
+            ".appxbundle - a bundle of .appx packages; PWABuilder's classic compatibility package, also uploaded",
+            ".appxupload - the Visual Studio wrapper around an .appxbundle plus symbols; not needed here",
+            ".xap - legacy Windows Phone 7/8 format, essentially dead; ignore it",
+            "Rule of thumb: msix = new, appx = old, bundle = multiple architectures, upload = VS wrapper with symbols",
+        ],
+    },
+    {
         "title": "Milestone - Packaging in progress",
         "bullets": [
             "Live app validated and hosted at https://vijayatmicrosoft.github.io/number-tiles-pwa/",
