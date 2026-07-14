@@ -1,14 +1,16 @@
 .app {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  height: 100dvh;
+  width: 100%;
+  height: min(100dvh, 780px);
   background: radial-gradient(circle at 50% 0%, #202040 0%, var(--color-bg) 60%);
   color: var(--color-text);
   max-width: 600px;
   margin: 0 auto;
   position: relative;
   overflow: hidden;
+  border-radius: 20px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 .header {
