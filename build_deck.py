@@ -106,6 +106,16 @@ SLIDES = [
         ],
     },
     {
+        "title": "Milestone - Packaging in progress",
+        "bullets": [
+            "Live app validated and hosted at https://vijayatmicrosoft.github.io/number-tiles-pwa/",
+            "Privacy policy published at /privacy.html (required for the Store listing)",
+            "Ran PWABuilder against the live URL to generate the Windows package",
+            "Key step: Package ID, Publisher ID, and Publisher display name must match the reserved app in Partner Center exactly",
+            "Output: a signed .msixbundle ready to upload to Partner Center",
+        ],
+    },
+    {
         "title": "Step 4 - Submit in Partner Center",
         "bullets": [
             "Register a developer account once (individual ~$19 / company ~$99)",
