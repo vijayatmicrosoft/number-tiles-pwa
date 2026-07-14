@@ -115,6 +115,29 @@ SLIDES = [
         ],
     },
     {
+        "title": "The exact role of PWABuilder",
+        "bullets": [
+            "PWABuilder is the bridge between your web app and the Microsoft Store",
+            "1. Audited the PWA: fetched the live URL and validated manifest, service worker, and HTTPS",
+            "2. Wrapped the web app in a Windows app container (the core job): generated the native AppxManifest, embedded your Store identity (Package ID, Publisher ID), and packed icons and metadata",
+            "3. Produced the deliverables: .msixbundle (main), .classic.appxbundle (compatibility), plus sideload test artifacts",
+            "What it does NOT do: it does not host your app - your code still runs from GitHub Pages",
+            "The generated package is a thin native shell that loads your live HTTPS site in a Windows WebView",
+            "Push an update to GitHub and installed users get it automatically; PWABuilder does not run or maintain your code, and does not submit for you",
+            "In one line: PWABuilder turns a live PWA URL into signed, Store-ready Windows packages - a packager, not a host or runtime",
+        ],
+    },
+    {
+        "title": "Where PWABuilder sits in the pipeline",
+        "bullets": [
+            "Step 1: Your code is hosted on GitHub Pages over HTTPS, giving a live URL",
+            "Step 2: PWABuilder reads that live URL, audits it, and wraps it into MSIX and APPX packages with your Store identity embedded",
+            "Step 3: You upload the .msixbundle and .appxbundle to Partner Center, complete the listing, and submit",
+            "Step 4: The Microsoft Store distributes the app; users install a native shell that loads your live site",
+            "Key idea: hosting (GitHub Pages), packaging (PWABuilder), and distribution (Partner Center / Store) are three separate responsibilities",
+        ],
+    },
+    {
         "title": "Matching the package identity to Partner Center",
         "bullets": [
             "PWABuilder shows example placeholder values - you must overwrite them with your real Partner Center identity",
