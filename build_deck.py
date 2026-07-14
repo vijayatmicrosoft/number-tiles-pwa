@@ -115,6 +115,29 @@ SLIDES = [
         ],
     },
     {
+        "title": "Matching the package identity to Partner Center",
+        "bullets": [
+            "PWABuilder shows example placeholder values - you must overwrite them with your real Partner Center identity",
+            "Package ID  =  Partner Center 'Package/Identity/Name' (the unique app identity the Store assigns)",
+            "Publisher ID  =  Partner Center 'Package/Identity/Publisher' (the CN=... value)",
+            "Publisher display name  =  Partner Center 'Package/Properties/PublisherDisplayName'",
+            "These must match exactly or Partner Center rejects the upload",
+            "Set Version to 1.0.1 or higher - the Store reserves 1.0.0.0",
+        ],
+    },
+    {
+        "title": "What is inside the PWABuilder package",
+        "bullets": [
+            ".msixbundle - the main Store package; upload this to Partner Center",
+            ".classic.appxbundle - compatibility package for older Windows 10; also upload this to Partner Center",
+            ".sideload.msix - a test copy to install locally (bypasses the Store); not uploaded",
+            "install.ps1 - helper script that installs the sideload package and its test certificate for local testing",
+            "utils folder - support files (test certificate and helpers) used by install.ps1",
+            "readme.html - PWABuilder's own instructions for these files",
+            "To submit: upload BOTH the .msixbundle and the .classic.appxbundle",
+        ],
+    },
+    {
         "title": "Milestone - Packaging in progress",
         "bullets": [
             "Live app validated and hosted at https://vijayatmicrosoft.github.io/number-tiles-pwa/",
