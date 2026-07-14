@@ -4,5 +4,10 @@
   gap: var(--tile-gap);
   max-width: var(--board-max-width);
   width: 100%;
-  padding: 4px;
+  margin: auto;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }

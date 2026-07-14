@@ -29,8 +29,8 @@
   --text-on-n8: #1a1a2e;
   --text-on-n9: #fff;
 
-  --tile-gap: 2px;
-  --tile-radius: 6px;
+  --tile-gap: 5px;
+  --tile-radius: 10px;
   --board-max-width: 450px;
 
   --anim-match: 0.4s;

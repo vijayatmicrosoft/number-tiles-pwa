@@ -3,7 +3,7 @@
   flex-direction: column;
   height: 100vh;
   height: 100dvh;
-  background-color: var(--color-bg);
+  background: radial-gradient(circle at 50% 0%, #202040 0%, var(--color-bg) 60%);
   color: var(--color-text);
   max-width: 600px;
   margin: 0 auto;
@@ -89,9 +89,9 @@
   overflow-y: auto;
   overflow-x: hidden;
   display: flex;
-  align-items: flex-start;
+  align-items: safe center;
   justify-content: center;
-  padding: 12px 8px;
+  padding: 16px 12px;
   -webkit-overflow-scrolling: touch;
 }
 
