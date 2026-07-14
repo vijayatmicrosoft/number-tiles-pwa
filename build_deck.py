@@ -78,6 +78,15 @@ SLIDES = [
         ],
     },
     {
+        "title": "The three pillars PWABuilder checks",
+        "bullets": [
+            "Manifest = identity: a JSON file (manifest.json) describing the app - name, icons, colors, and how it launches. It makes a website installable and gives PWABuilder the metadata to build the Store package.",
+            "Service Worker = offline + installable: a background script (sw.js) between the app and the network. It caches files so the app loads fast and works offline, and it enables installation. Prefer network-first: fresh when online, cached fallback offline.",
+            "Security = HTTPS: the app must be served over HTTPS. Service workers only run on secure origins and the Store requires it. Hosting on GitHub Pages satisfies this automatically.",
+            "In short: Manifest = identity, Service Worker = offline + installable, Security = HTTPS.",
+        ],
+    },
+    {
         "title": "Common gotcha - service worker caching",
         "bullets": [
             "Symptom: code/asset edits don't appear after refresh (stale files served)",
