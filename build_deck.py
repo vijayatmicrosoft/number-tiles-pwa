@@ -152,6 +152,20 @@ SLIDES = [
         ],
     },
     {
+        "title": "Two upload questions clarified",
+        "bullets": [
+            "Why pick a device family if the package already declares one?",
+            "Package manifest (TargetDeviceFamily) = the technical capability: which OS families the package CAN run on",
+            "Partner Center checkboxes = your distribution choice: which device families you WANT to offer the app to",
+            "They are separate on purpose - e.g. a package could run on Xbox but you may choose not to support it",
+            "If no box is checked, the Store has no market to list the app in, so you must opt in (check Windows 10/11 Desktop)",
+            "Why is .msixupload not needed for a PWA?",
+            "It is a Visual Studio wrapper that bundles native debug symbols (.appxsym) for crash analysis",
+            "PWABuilder does not produce one, and the Store accepts .msixbundle directly",
+            "A PWA is HTML, CSS, and JavaScript with no native compiled code, so there are no symbols to ship - the format is irrelevant",
+        ],
+    },
+    {
         "title": "Milestone - Packaging in progress",
         "bullets": [
             "Live app validated and hosted at https://vijayatmicrosoft.github.io/number-tiles-pwa/",
