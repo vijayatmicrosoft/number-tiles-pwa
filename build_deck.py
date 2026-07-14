@@ -228,6 +228,53 @@ SLIDES = [
             "[ ] Submitted in Partner Center and passed certification",
         ],
     },
+    {"section": True, "title": "Code Signing and Certificates"},
+    {
+        "title": "Why Windows requires signing",
+        "bullets": [
+            "Windows refuses to install an unsigned MSIX or APPX package",
+            "A signature answers two questions: who made this (authenticity) and was it changed since (integrity)",
+            "Think of it as a tamper-proof wax seal stamped with a unique signet ring",
+        ],
+    },
+    {
+        "title": "How a digital signature works",
+        "bullets": [
+            "Uses asymmetric cryptography: a private key (secret) and a public key (shared)",
+            "Sign: hash the package with SHA-256, then encrypt that hash with the private key to produce the signature",
+            "Verify: Windows re-hashes the package and checks it against the signature using the public key",
+            "If they match, the package is unmodified and was signed by the holder of the private key",
+        ],
+    },
+    {
+        "title": "Certificates and the chain of trust",
+        "bullets": [
+            "A public key alone does not prove identity",
+            "A certificate binds a public key to an identity and is vouched for by a Certificate Authority (CA)",
+            "Windows trusts a set of root CAs and walks the chain: package to your certificate to a trusted root",
+            "A self-signed certificate has no CA backing, so Windows shows an untrusted publisher warning",
+        ],
+    },
+    {
+        "title": "Why you did not need your own certificate",
+        "bullets": [
+            "For Store apps, Microsoft signs the package for you during certification",
+            "The trust chain becomes: Microsoft Root CA to Microsoft Store CA to your app",
+            "Every Windows device already trusts Microsoft's root, so the app installs cleanly",
+            "This is why the Publisher ID (CN=GUID) had to match: it is your identity in Microsoft's signing system",
+            "You would only buy a code-signing certificate if you distributed the app outside the Store",
+        ],
+    },
+    {
+        "title": "The test certificate in your package",
+        "bullets": [
+            "PWABuilder also generated a self-signed test certificate (in the utils folder, used by install.ps1)",
+            "install.ps1 trusts that certificate on your machine, then installs the sideload .msix for local testing",
+            "Self-signed is fine on your own PC but is not trusted by anyone else",
+            "Public trust comes from Microsoft's signature, not yours",
+            "Bonus: timestamping proves it was signed while the certificate was valid, so it keeps working after the cert expires",
+        ],
+    },
 ]
 # === END MILESTONES =========================================================
 
@@ -309,6 +356,41 @@ def build_title_slide(prs):
     r.font.color.rgb = ACCENT
 
 
+def build_section_slide(prs, data):
+    """Render a dark section-divider slide with a centered title and accent bar."""
+    slide = prs.slides.add_slide(prs.slide_layouts[6])  # blank
+
+    # Dark background rectangle covering the whole slide.
+    bg = slide.shapes.add_shape(1, 0, 0, SLIDE_W, SLIDE_H)  # 1 = rectangle
+    bg.fill.solid()
+    bg.fill.fore_color.rgb = DARK_BG
+    bg.line.fill.background()
+    bg.shadow.inherit = False
+
+    # Centered accent bar above the title.
+    bar_w = Inches(2.4)
+    bar = slide.shapes.add_shape(
+        1, int((SLIDE_W - bar_w) / 2), Inches(2.85), bar_w, Inches(0.12)
+    )
+    bar.fill.solid()
+    bar.fill.fore_color.rgb = ACCENT
+    bar.line.fill.background()
+    bar.shadow.inherit = False
+
+    # Centered section title in large light text.
+    title_box = slide.shapes.add_textbox(Inches(0.9), Inches(3.2), Inches(11.5), Inches(1.6))
+    tf = title_box.text_frame
+    tf.word_wrap = True
+    tf.vertical_anchor = MSO_ANCHOR.MIDDLE
+    p = tf.paragraphs[0]
+    p.alignment = PP_ALIGN.CENTER
+    r = p.add_run()
+    r.text = data["title"]
+    r.font.size = Pt(40)
+    r.font.bold = True
+    r.font.color.rgb = LIGHT_TEXT
+
+
 def build_content_slide(prs, data):
     slide = prs.slides.add_slide(prs.slide_layouts[6])  # blank
 
@@ -375,7 +457,10 @@ def main():
 
     build_title_slide(prs)
     for data in SLIDES:
-        build_content_slide(prs, data)
+        if data.get("section"):
+            build_section_slide(prs, data)
+        else:
+            build_content_slide(prs, data)
 
     prs.save(OUTPUT_PATH)
 
